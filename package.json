@@ -1,0 +1,13 @@
+{
+  "name": "quoridor-analyzer",
+  "version": "1.0.0",
+  "description": "Browser-based Quoridor position and game analyzer with pluggable engines",
+  "private": true,
+  "type": "module",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "test": "node test/crosscheck.mjs"
+  },
+  "engines": { "node": ">=18" }
+}

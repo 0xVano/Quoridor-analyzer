@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quoridor — position analyzer</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <h1>Quoridor <span>position analyzer</span></h1>
+  <p id="status" class="status" role="status" aria-live="polite"></p>
+</header>
+
+<main class="layout">
+  <section class="board-col" aria-label="Board">
+    <div class="player" id="player-1"></div>
+    <div class="board-wrap">
+      <svg id="board" viewBox="-9 -3 126 127" role="img" aria-label="Quoridor board, 9 by 9"></svg>
+    </div>
+    <div class="player" id="player-0"></div>
+
+    <div class="modes" role="radiogroup" aria-label="What to place">
+      <button type="button" role="radio" data-mode="pawn"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5"/></svg>Pawn <kbd>1</kbd></button>
+      <button type="button" role="radio" data-mode="horizontal" aria-label="Horizontal wall" title="Horizontal wall"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="6.5" width="14" height="3" rx="1"/></svg>Wall <kbd>2</kbd></button>
+      <button type="button" role="radio" data-mode="vertical" aria-label="Vertical wall" title="Vertical wall"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="6.5" y="1" width="3" height="14" rx="1"/></svg>Wall <kbd>3</kbd></button>
+    </div>
+  </section>
+
+  <aside class="side">
+    <section class="card" aria-labelledby="an-title">
+      <div class="card-head">
+        <h2 id="an-title">Position analysis</h2>
+        <label class="switch"><input type="checkbox" id="auto"><span></span>Auto-analyze</label>
+      </div>
+      <div class="row">
+        <label for="engine">Engine</label>
+        <select id="engine"></select>
+      </div>
+      <div class="row">
+        <label for="budget" id="budget-label">Budget</label>
+        <select id="budget"></select>
+      </div>
+      <div class="row">
+        <label for="topn">Show</label>
+        <div class="row tight">
+          <select id="topn">
+            <option value="1">Top 1</option><option value="2">Top 2</option><option value="3">Top 3</option>
+            <option value="4">Top 4</option><option value="5" selected>Top 5</option>
+          </select>
+          <div class="seg" role="radiogroup" aria-label="What to show on the board">
+            <button type="button" role="radio" data-show="all">All</button>
+            <button type="button" role="radio" data-show="selected">Selected</button>
+          </div>
+        </div>
+      </div>
+      <button type="button" id="analyze" class="btn primary">Analyze</button>
+      <div class="progress" id="progress" hidden><i></i></div>
+      <div id="result" class="result"></div>
+    </section>
+
+    <section class="card" aria-labelledby="hist-title">
+      <div class="card-head">
+        <h2 id="hist-title">Game</h2>
+        <div class="nav">
+          <button type="button" id="first" class="icon" title="Go to start" aria-label="Go to start"><svg viewBox="0 0 16 16"><path d="M4 3v10M12 3 6 8l6 5"/></svg></button>
+          <button type="button" id="undo" class="icon" title="Back (←)" aria-label="Undo move"><svg viewBox="0 0 16 16"><path d="M10 3 5 8l5 5"/></svg></button>
+          <button type="button" id="redo" class="icon" title="Forward (→)" aria-label="Redo move"><svg viewBox="0 0 16 16"><path d="m6 3 5 5-5 5"/></svg></button>
+          <button type="button" id="last" class="icon" title="Go to end" aria-label="Go to end"><svg viewBox="0 0 16 16"><path d="M12 3v10M4 3l6 5-6 5"/></svg></button>
+        </div>
+      </div>
+      <ol id="moves" class="moves"></ol>
+      <div id="review" class="review"></div>
+      <button type="button" id="analyze-game" class="btn">Analyze game</button>
+      <div class="progress" id="game-progress" hidden><i></i></div>
+      <details class="io">
+        <summary>Import and export</summary>
+        <label for="io-text">Moves in notation: <code>e2</code> is a pawn move, <code>e3h</code> / <code>e3v</code> a wall</label>
+        <textarea id="io-text" rows="4" spellcheck="false" placeholder="1. e2 e8 2. e3 e7 3. d7h …"></textarea>
+        <div class="row">
+          <button type="button" id="io-load" class="btn">Load game</button>
+          <button type="button" id="io-copy" class="btn">Copy current game</button>
+        </div>
+        <p id="io-msg" class="hintline" role="status"></p>
+      </details>
+      <button type="button" id="new-game" class="btn">New game</button>
+    </section>
+  </aside>
+</main>
+
+<script type="module" src="src/ui/main.js"></script>
+</body>
+</html>
